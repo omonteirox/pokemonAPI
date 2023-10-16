@@ -1,6 +1,8 @@
 package omonteirox.pokemon.Controllers;
 
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,7 +18,7 @@ import omonteirox.pokemon.Models.Pokemon;
 import omonteirox.pokemon.Services.PokemonService;
 import omonteirox.pokemon.Services.PokemonTypeService;
 
-@Path("/pokemon")
+@Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PokemonController {
@@ -27,7 +29,7 @@ public class PokemonController {
         pokemonTypeService = new PokemonTypeService();    
     } 
     @GET
-    @Path("/{num}")
+    @Path("/pokemon/{num}")
     public Response getByNum(@PathParam("num") String num){
         Pokemon pokemon = pokemonService.getByNum(num);
         if(pokemon == null || pokemon.getId() == null){
@@ -37,6 +39,7 @@ public class PokemonController {
         return Response.ok(pokemon).build();
     }
     @POST
+    @Path("/pokemon")
     public Response create(Pokemon pokemon) {
         Pokemon newPokemon = pokemonService.insert(pokemon);
         if(newPokemon == null){
@@ -50,7 +53,7 @@ public class PokemonController {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/pokemon/{id}")
     public Response delete(@PathParam("id") String id){
          boolean deleted = pokemonService.delete(id);
             if(!deleted){
@@ -59,6 +62,7 @@ public class PokemonController {
             return Response.ok().build();
     }
     @PUT
+    @Path("/pokemon")
     public Response update(Pokemon pokemon){
        Pokemon updatePokemon = pokemonService.update(pokemon);
          if(updatePokemon == null){
@@ -69,6 +73,42 @@ public class PokemonController {
             pokemonTypeService.create(type, pokemon.getNum());
          }
         return Response.ok(updatePokemon).build();
+    }
+    @GET
+    @Path("/pokemons")
+    public Response getAll() {
+        List<Pokemon> pokemons = pokemonService.getAll();
+        if(pokemons == null){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        for(Pokemon pokemon : pokemons){
+            pokemon.setType(pokemonTypeService.getByNum(pokemon.getNum()));
+        }
+        return Response.ok(pokemons).build();
+    }
+    @GET
+    @Path("pokemons/{type}")
+    public Response getByType(@PathParam("type") String type){
+        List<Pokemon> pokemons = pokemonService.getByType(type);
+        if(pokemons == null){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        for(Pokemon pokemon : pokemons){
+            pokemon.setType(pokemonTypeService.getByNum(pokemon.getNum()));
+        }
+        return Response.ok(pokemons).build();
+    }
+    @GET
+    @Path("/pokemons/{page}/{qtd}")
+    public Response getByPage(@PathParam("page") int page, @PathParam("qtd") int qtd){
+        List<Pokemon> pokemons = pokemonService.getByPage(page, qtd);
+        if(pokemons == null){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        for(Pokemon pokemon : pokemons){
+            pokemon.setType(pokemonTypeService.getByNum(pokemon.getNum()));
+        }
+        return Response.ok(pokemons).build();
     }
 
 }
