@@ -1,26 +1,26 @@
 # PokedexAPI
-    - Desafio técnico com foco em java e conhecimento de API'S rest.
-    - Utilizando java 8 e postgresql
-    - Utilizando Jersey
+- Desafio técnico com foco em java e conhecimento de API'S rest.
+- Utilizando java 8 e postgresql
+- Utilizando Jersey
 # Rotas Criadas
 Segue a baixo as rotas criadas de acordo com cada método:
 ## POST
 /pokemon
 Corpo: json
 Exemplo:
-{
-    "num": "030",
-    "name": "Ivysaur",
-    "type" : ["Fogo","Agua","Mar"],
-    "pre_evolution": [{
-      "num": "001",
-      "name": "Bulbasaur"
-    }],
-    "next_evolution": [{
-      "num": "003",
-      "name": "Venusaur"
-    }]
-  }
+        {
+            "num": "030",
+            "name": "Ivysaur",
+            "type" : ["Fogo","Agua","Mar"],
+            "pre_evolution": [{
+              "num": "001",
+              "name": "Bulbasaur"
+            }],
+            "next_evolution": [{
+              "num": "003",
+              "name": "Venusaur"
+            }]
+          }
   Retorna o pokemon criado;
 ## GET
 /pokemon/NUM
