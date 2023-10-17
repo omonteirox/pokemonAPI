@@ -2,6 +2,8 @@
     - Desafio técnico com foco em java e conhecimento de API'S rest.
     - Utilizando java 8 e postgresql
     - Utilizando Jersey
+    - Funcionalidade de importar objetos via json implementado
+    - Padronizando retornos com ResponseModel
 # Rotas Criadas
 Segue a baixo as rotas criadas de acordo com cada método:
 ## POST
