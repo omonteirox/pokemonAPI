@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import omonteirox.pokemon.Models.Pokemon;
+import omonteirox.pokemon.Models.ResponseModel;
 import omonteirox.pokemon.Services.PokemonService;
 import omonteirox.pokemon.Services.PokemonTypeService;
 
@@ -39,9 +40,9 @@ public class PokemonController {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
             pokemon.setType(pokemonTypeService.getByNum(pokemon.getNum()));
-            return Response.ok(pokemon).build();
+            return Response.ok(new ResponseModel<Pokemon>(pokemon)).build();
         } catch (Exception e) {
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getCause()).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(new ResponseModel<Exception>(e.getMessage())).build();
         }
     }
 
@@ -56,9 +57,9 @@ public class PokemonController {
             for (String type : pokemon.getType()) {
                 pokemonTypeService.create(type, pokemon.getNum());
             }
-            return Response.ok(newPokemon).build();
+            return Response.ok(new ResponseModel<Pokemon>(newPokemon)).build();
         } catch (Exception e) {
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(new ResponseModel<Exception>(e.getMessage())).build();
         }
 
     }
@@ -73,7 +74,7 @@ public class PokemonController {
             }
             return Response.ok().build();
         } catch (Exception e) {
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(new ResponseModel<Exception>(e.getMessage())).build();
 
         }
     }
@@ -90,9 +91,9 @@ public class PokemonController {
             for (String type : pokemon.getType()) {
                 pokemonTypeService.create(type, pokemon.getNum());
             }
-            return Response.ok(updatePokemon).build();
+            return Response.ok(new ResponseModel<Pokemon>(updatePokemon)).build();
         } catch (Exception e) {
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(new ResponseModel<Exception>(e.getMessage())).build();
 
         }
 
@@ -109,9 +110,9 @@ public class PokemonController {
             for (Pokemon pokemon : pokemons) {
                 pokemon.setType(pokemonTypeService.getByNum(pokemon.getNum()));
             }
-            return Response.ok(pokemons).build();
+            return Response.ok(new ResponseModel<List<Pokemon>>(pokemons)).build();
         } catch (Exception e) {
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(new ResponseModel<Exception>(e.getMessage())).build();
 
         }
 
@@ -128,9 +129,9 @@ public class PokemonController {
             for (Pokemon pokemon : pokemons) {
                 pokemon.setType(pokemonTypeService.getByNum(pokemon.getNum()));
             }
-            return Response.ok(pokemons).build();
+            return Response.ok(new ResponseModel<List<Pokemon>>(pokemons)).build();
         } catch (Exception e) {
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(new ResponseModel<Exception>(e.getMessage())).build();
         }
 
     }
@@ -146,9 +147,9 @@ public class PokemonController {
             for (Pokemon pokemon : pokemons) {
                 pokemon.setType(pokemonTypeService.getByNum(pokemon.getNum()));
             }
-            return Response.ok(pokemons).build();
+            return Response.ok(new ResponseModel<List<Pokemon>>(pokemons)).build();
         } catch (Exception e) {
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(new ResponseModel<Exception>(e.getMessage())).build();
 
         }
 
