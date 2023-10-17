@@ -66,6 +66,12 @@ public class PokemonTypeService implements PokemonTypeDAO {
     @Override
     public Boolean create(String type, String num) {
         String query = "insert into pokemon_type (name,pokemon_num) values (?, ?)";
+        if (type.contains("[")){
+            type = type.replace("[", "");
+        }
+        if (type.contains("]")){
+            type = type.replace("]", "");
+        }
         connection = null;
         PreparedStatement preparedStatement = null;
         try {

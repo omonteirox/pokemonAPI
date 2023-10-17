@@ -42,7 +42,7 @@ public class PokemonService implements PokemonDAO{
                 p.setNum(resultSet.getString("num"));
                 p.setName(resultSet.getString("name"));
                 p.setNext_evolution(getEvolution(resultSet.getArray("next_evolution")));
-                p.setPre_evolution(getEvolution(resultSet.getArray("pre_evolution")));
+                p.setPrev_evolution(getEvolution(resultSet.getArray("prev_evolution")));
                 pokemonList.add(p);
             }
             return pokemonList;
@@ -74,7 +74,7 @@ public class PokemonService implements PokemonDAO{
                 pokemon.setNum(resultSet.getString("num"));
                 pokemon.setName(resultSet.getString("name"));
                 pokemon.setNext_evolution(getEvolution(resultSet.getArray("next_evolution")));
-                pokemon.setPre_evolution(getEvolution(resultSet.getArray("pre_evolution")));   
+                pokemon.setPrev_evolution(getEvolution(resultSet.getArray("prev_evolution")));   
             }
             return pokemon;           
         } 
@@ -95,13 +95,13 @@ public class PokemonService implements PokemonDAO{
         connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String query = "INSERT INTO pokemon ( num, name, pre_evolution, next_evolution) VALUES (?, ?, ?::json, ?::json)";
+        String query = "INSERT INTO pokemon ( num, name, prev_evolution, next_evolution) VALUES (?, ?, ?::json, ?::json)";
         try {
             connection = DbContext.Connect();
             preparedStatement = connection.prepareStatement(query, java.sql.Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, pokemon.getNum());
             preparedStatement.setString(2, pokemon.getName());
-            preparedStatement.setObject(3, converToJson(pokemon.getPre_evolution()));
+            preparedStatement.setObject(3, converToJson(pokemon.getPrev_evolution()));
             preparedStatement.setObject(4, converToJson(pokemon.getNext_evolution()));
             preparedStatement.execute();
             resultSet = preparedStatement.getGeneratedKeys();
@@ -125,12 +125,12 @@ public class PokemonService implements PokemonDAO{
         connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String query = "UPDATE pokemon set name = ?, pre_evolution = ?::json, next_evolution = ?::json where num = ?";
+        String query = "UPDATE pokemon set name = ?, prev_evolution = ?::json, next_evolution = ?::json where num = ?";
         try {
             connection = DbContext.Connect();
             preparedStatement = connection.prepareStatement(query, java.sql.Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, pokemon.getName());
-            preparedStatement.setObject(2, converToJson(pokemon.getPre_evolution()));
+            preparedStatement.setObject(2, converToJson(pokemon.getPrev_evolution()));
             preparedStatement.setObject(3, converToJson(pokemon.getNext_evolution()));
             preparedStatement.setString(4, pokemon.getNum().toString());
             int rowsAffected = preparedStatement.executeUpdate();
@@ -144,7 +144,7 @@ public class PokemonService implements PokemonDAO{
                 newPokemon.setNum(resultSet.getString("num"));
                 newPokemon.setName(resultSet.getString("name"));
                 newPokemon.setNext_evolution(getEvolution(resultSet.getArray("next_evolution")));
-                newPokemon.setPre_evolution(getEvolution(resultSet.getArray("pre_evolution")));
+                newPokemon.setPrev_evolution(getEvolution(resultSet.getArray("prev_evolution")));
             }
             return newPokemon;
 
@@ -177,7 +177,7 @@ public class PokemonService implements PokemonDAO{
     }
 
      private List<Evolution> getEvolution(Array array) {
-        if (array == null)
+        if (array == null || array.toString().equals("[{}]"))
             return new ArrayList<Evolution>();
         String jsonString = array.toString();
         List<Evolution> evList = new ArrayList<Evolution>();
@@ -187,7 +187,7 @@ public class PokemonService implements PokemonDAO{
             Evolution v = new Evolution();
             JsonObject jsonObject = arrayjson.getJsonObject(i);
             v.setName(jsonObject.getString("name"));
-            v.setNum(jsonObject.getString("num"));
+            v.setNum(jsonObject.getString("num"));  
             evList.add(v);
         }
         return evList;
@@ -195,6 +195,8 @@ public class PokemonService implements PokemonDAO{
 
     private String converToJson(List<Evolution> evList) {
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        if (evList == null)
+            return "[]";
         for (Evolution v : evList) {
             JsonObjectBuilder objBuilder = Json.createObjectBuilder()
             .add("num", v.getNum())
@@ -221,7 +223,7 @@ public class PokemonService implements PokemonDAO{
             	pokemon.setId(resultSet.getInt(1));
             	pokemon.setNum(resultSet.getString(2));
             	pokemon.setName(resultSet.getString(3));
-            	pokemon.setPre_evolution(getEvolution(resultSet.getArray("pre_evolution")));
+            	pokemon.setPrev_evolution(getEvolution(resultSet.getArray("prev_evolution")));
             	pokemon.setNext_evolution(getEvolution(resultSet.getArray("next_evolution")));             	
             	pokemons.add(pokemon);
             }
@@ -254,7 +256,7 @@ public class PokemonService implements PokemonDAO{
                 p.setNum(resultSet.getString("num"));
                 p.setName(resultSet.getString("name"));
                 p.setNext_evolution(getEvolution(resultSet.getArray("next_evolution")));
-                p.setPre_evolution(getEvolution(resultSet.getArray("pre_evolution")));
+                p.setPrev_evolution(getEvolution(resultSet.getArray("prev_evolution")));
                 pokemonList.add(p);
             }
             return pokemonList;
