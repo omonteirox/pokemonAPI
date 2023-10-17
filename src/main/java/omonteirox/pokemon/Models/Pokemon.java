@@ -3,12 +3,15 @@ package omonteirox.pokemon.Models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+ @JsonIgnoreProperties(ignoreUnknown = true)
 public class Pokemon {
     private Integer id;
     private String num;
     private String name;
     private List<String> type = new ArrayList<String>();
-    private List<Evolution>  pre_evolution;
+    private List<Evolution>  prev_evolution;
     private List<Evolution> next_evolution;
     public Integer getId() {
         return id;
@@ -38,14 +41,14 @@ public class Pokemon {
     
     @Override
     public String toString() {
-        return "Pokemon [id=" + id + ", num=" + num + ", name=" + name + ", type=" + type + ", pre_evolution="
-                + pre_evolution + ", next_evolution=" + next_evolution + "]";
+        return "Pokemon [id=" + id + ", num=" + num + ", name=" + name + ", type=" + type + ", prev_evolution="
+                + prev_evolution + ", next_evolution=" + next_evolution + "]";
     }
-    public List<Evolution> getPre_evolution() {
-        return pre_evolution;
+    public List<Evolution> getPrev_evolution() {
+        return prev_evolution;
     }
-    public void setPre_evolution(List<Evolution> pre_evolution) {
-        this.pre_evolution = pre_evolution;
+    public void setPrev_evolution(List<Evolution> prev_evolution) {
+        this.prev_evolution = prev_evolution;
     }
     public List<Evolution> getNext_evolution() {
         return next_evolution;

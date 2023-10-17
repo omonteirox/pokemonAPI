@@ -1,6 +1,8 @@
 package omonteirox.pokemon.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Evolution {
     private String num;
     private String name;
