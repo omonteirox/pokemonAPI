@@ -4,6 +4,10 @@
     - Utilizando Jersey
     - Funcionalidade de importar objetos via json implementado
     - Padronizando retornos com ResponseModel
+
+# Como importar o arquivo .json?
+  Para realizar o import, acesse o arquivo Main.java e retire o comentário da linha 46, e dentro do Método ImportarJSON insira o caminho do json desejado.
+
 # Rotas Criadas
 Segue a baixo as rotas criadas de acordo com cada método:
 ## POST
