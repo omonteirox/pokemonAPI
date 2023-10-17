@@ -10,6 +10,9 @@ Segue a baixo as rotas criadas de acordo com cada método:
 /pokemon
 Corpo: json
 Exemplo:
+```json
+
+
 {
     "num": "030",
     "name": "Ivysaur",
@@ -23,14 +26,18 @@ Exemplo:
       "name": "Venusaur"
     }]
   }
+```
   Retorna o pokemon criado;
 ## GET
 /pokemon/NUM
 Retorna o pokemon de acordo com o "Num" que é o identificador único
+
 /pokemons
 Retorna todos os pokemons
+
 /pokemons/pagina/quantidade
 Retorna os pokemons listados em páginas
+
 /pokemons/TIPO_POKEMON
 Retorna os pokemons do tipo colocado na url
 
