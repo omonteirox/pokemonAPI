@@ -4,9 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import omonteirox.pokemon.Models.Pokemon;
@@ -15,15 +12,14 @@ import omonteirox.pokemon.Services.PokemonService;
 import omonteirox.pokemon.Services.PokemonTypeService;
 
 public class ImportJson {
-    private static PokemonService pokemonService = new PokemonService();
-    private static PokemonTypeService pokemonTypeService = new PokemonTypeService();
+    private static final PokemonService pokemonService = new PokemonService();
+    private static final PokemonTypeService pokemonTypeService = new PokemonTypeService();
  
 
-    private static List<Pokemon> lerJSON(String caminhoArquivo) throws JsonParseException, JsonMappingException, IOException {
+    private static List<Pokemon> lerJSON(String caminhoArquivo) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         PokemonData pokemonData = objectMapper.readValue(new File(caminhoArquivo), PokemonData.class);
-        List<Pokemon> pokemons = pokemonData.getPokemon();
-        return pokemons;
+        return pokemonData.getPokemon();
     }
     public static void ImportarJSON(String caminhoArquivo){
         try {

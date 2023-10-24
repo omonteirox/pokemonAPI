@@ -1,5 +1,6 @@
 package omonteirox.pokemon.Controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -105,7 +106,7 @@ public class PokemonController {
         try {
             List<Pokemon> pokemons = pokemonService.getAll();
             if (pokemons == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.ok(new ResponseModel<ArrayList<Pokemon>>(new ArrayList<Pokemon>())).build();
             }
             for (Pokemon pokemon : pokemons) {
                 pokemon.setType(pokemonTypeService.getByNum(pokemon.getNum()));
